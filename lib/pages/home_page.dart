@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:harperdb_hashnode_hackathon/models/failure_model.dart';
 import 'package:harperdb_hashnode_hackathon/models/post_model.dart';
 import 'package:harperdb_hashnode_hackathon/repository/schedule_repository.dart';
+import 'package:harperdb_hashnode_hackathon/ui/post_row.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -43,16 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemCount: items.length,
                 itemBuilder: (BuildContext context, int index) {
 
-                  final item = items[index];
-                  return Container(
-                    margin: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: ListTile(
-                      title: Text('${item.title}'),
-                    ),
-                  );
+                  return PostRow(post: items[index]);
                 },
               );
             } else if (snapshot.hasError) {
