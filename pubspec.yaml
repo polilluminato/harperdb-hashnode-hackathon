@@ -25,4 +25,4 @@ flutter:
 
   assets:
     - .env
-
+    - assets/logo/
