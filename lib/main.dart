@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        accentColor: Colors.indigo,
       ),
       home: MyHomePage(title: 'HarperDB Hashnode Hackathon'),
     );
