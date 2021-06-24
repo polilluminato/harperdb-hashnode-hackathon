@@ -31,7 +31,7 @@ class ScheduleRepository {
 
       if (response.statusCode == 200) {
         return (jsonDecode(response.body) as List).map((e) => Post.fromJson(e)).toList()
-        ..sort((a, b) => b.postDate.compareTo(a.postDate));
+        ..sort((a, b) => a.postDate.compareTo(b.postDate));
       } else {
         throw const Failure(message: 'Something went wrong! - 1');
       }
