@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:harperdb_hashnode_hackathon/models/failure_model.dart';
 import 'package:harperdb_hashnode_hackathon/models/post_model.dart';
+import 'package:harperdb_hashnode_hackathon/pages/single_post_page.dart';
 import 'package:harperdb_hashnode_hackathon/repository/schedule_repository.dart';
 import 'package:harperdb_hashnode_hackathon/ui/post_row.dart';
 
@@ -14,7 +14,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   late Future<List<Post>> _futurePosts;
 
   @override
@@ -27,6 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(widget.title),
       ),
       body: RefreshIndicator(
@@ -43,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
               return ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (BuildContext context, int index) {
-
                   return PostRow(post: items[index]);
                 },
               );
@@ -55,6 +54,28 @@ class _MyHomePageState extends State<MyHomePage> {
             // Show a loading spinner.
             return const Center(child: CircularProgressIndicator());
           },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SinglePostPage(
+                singlePost: new Post(
+                    id: 0,
+                    link: "",
+                    platform: "",
+                    postDate: DateTime.now(),
+                    text: "",
+                    title: ""),
+              ),
+            ),
+          );
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
         ),
       ),
     );
