@@ -63,9 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
             MaterialPageRoute(
               builder: (context) => SinglePostPage(
                 singlePost: new Post(
-                    id: 0,
+                    id: "",
                     link: "",
-                    platform: "",
+                    platform: "hashnode",
                     postDate: DateTime.now(),
                     text: "",
                     title: ""),
