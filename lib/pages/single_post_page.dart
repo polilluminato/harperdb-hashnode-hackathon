@@ -1,6 +1,7 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:harperdb_hashnode_hackathon/models/post_model.dart';
+import 'package:harperdb_hashnode_hackathon/repository/schedule_repository.dart';
 import 'package:intl/intl.dart';
 
 class SinglePostPage extends StatefulWidget {
@@ -59,7 +60,17 @@ class _SinglePostPageState extends State<SinglePostPage> {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    bool _isNewPost = (widget.singlePost.id == 0);
+    bool _isNewPost = widget.singlePost.id.isEmpty;
+
+    final _titleController =
+        TextEditingController(text: widget.singlePost.title);
+    final _linkController =
+        TextEditingController(text: widget.singlePost.link);
+    final _textController =
+        TextEditingController(text: widget.singlePost.text);
+    final _postDateController = TextEditingController(
+        text:
+            DateFormat('yyyy-MM-dd HH:mm').format(widget.singlePost.postDate));
 
     return Scaffold(
       appBar: AppBar(
@@ -92,7 +103,18 @@ class _SinglePostPageState extends State<SinglePostPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+
+          widget.singlePost.title = _titleController.text;
+          widget.singlePost.link = _linkController.text;
+          widget.singlePost.text = _textController.text;
+          widget.singlePost.postDate =
+              DateTime.parse(_postDateController.text);
+
+          _isNewPost
+              ? ScheduleRepository().insertPost(widget.singlePost)
+              : ScheduleRepository().updatePost(widget.singlePost);
+        },
         child: const Icon(
           Icons.save,
           color: Colors.white,
@@ -106,7 +128,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
-                initialValue: _isNewPost ? "" : widget.singlePost.title,
+                controller: _titleController,
                 maxLines: 1,
                 decoration: InputDecoration(
                   icon: Icon(Icons.edit),
@@ -122,7 +144,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
                 height: 24,
               ),
               TextFormField(
-                initialValue: _isNewPost ? "" : widget.singlePost.link,
+                controller: _linkController,
                 maxLines: 1,
                 decoration: InputDecoration(
                   icon: Icon(Icons.link),
@@ -138,11 +160,11 @@ class _SinglePostPageState extends State<SinglePostPage> {
                 height: 24,
               ),
               TextFormField(
-                initialValue: _isNewPost ? "" : widget.singlePost.text,
+                controller: _textController,
                 minLines: 5,
                 maxLines: 10,
                 decoration: InputDecoration(
-                  icon: Icon(Icons.share),
+                  icon: Icon(Icons.message),
                   hintText: 'Enter the text you want to share on social media',
                   labelText: 'Share Text',
                   border: OutlineInputBorder(
@@ -155,7 +177,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
                 height: 24,
               ),
               DateTimeField(
-                initialValue: widget.singlePost.postDate,
+                controller: _postDateController,
                 decoration: InputDecoration(
                   icon: Icon(Icons.calendar_today),
                   labelText: 'Publish date',
@@ -164,7 +186,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
                     borderSide: BorderSide(),
                   ),
                 ),
-                format: DateFormat("yyyy-MM-dd @ HH:mm"),
+                format: DateFormat("yyyy-MM-dd HH:mm"),
                 onShowPicker: (context, currentValue) async {
                   final date = await showDatePicker(
                       context: context,
@@ -189,7 +211,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
               Row(
                 children: [
                   Icon(
-                    Icons.calendar_today,
+                    Icons.share,
                     color: Colors.grey,
                   ),
                   SizedBox(width: 16),
@@ -204,9 +226,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
                       ),
                       child: DropdownButton<String>(
                         underline: Container(color: Colors.transparent),
-                        value: _isNewPost
-                            ? _chosenValue
-                            : widget.singlePost.platform,
+                        value: widget.singlePost.platform,
                         isExpanded: true,
                         style: TextStyle(color: Colors.white),
                         items: _items
@@ -217,8 +237,15 @@ class _SinglePostPageState extends State<SinglePostPage> {
                           );
                         }).toList(),
                         onChanged: (value) {
+                          _chosenValue = value.toString();
+
                           setState(() {
-                            _chosenValue = value.toString();
+                            widget.singlePost.title = _titleController.text;
+                            widget.singlePost.link = _linkController.text;
+                            widget.singlePost.text = _textController.text;
+                            widget.singlePost.postDate =
+                                DateTime.parse(_postDateController.text);
+                            widget.singlePost.platform = value.toString();
                           });
                         },
                       ),
