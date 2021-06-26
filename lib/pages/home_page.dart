@@ -39,7 +39,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
           title: Text(
             widget.title,
-            style: GoogleFonts.ubuntu(),
+            style: GoogleFonts.ubuntu(
+              color: Colors.black87,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           actions: [
             InkWell(
@@ -51,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Icon(
                   Icons.sync,
                   size: 26,
+                  color: Colors.black87,
                 ),
               ),
             ),

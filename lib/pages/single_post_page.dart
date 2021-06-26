@@ -51,9 +51,11 @@ class _SinglePostPageState extends State<SinglePostPage> {
             bool result =
                 await ScheduleRepository().removePost(widget.singlePost);
 
-            showToast(result
-                ? "Post successfully deleted"
-                : "Error on delete, retry.",context: context);
+            showToast(
+                result
+                    ? "Post successfully deleted"
+                    : "Error on delete, retry.",
+                context: context);
 
             //Remove the dialog
             Navigator.of(context).pop();
@@ -89,10 +91,15 @@ class _SinglePostPageState extends State<SinglePostPage> {
       appBar: AppBar(
         title: Text(
           "Single Post Scheduling",
-          style: GoogleFonts.ubuntu(),
+          style: GoogleFonts.ubuntu(
+            color: Colors.black87,
+          ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black87,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -113,6 +120,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
                     child: Icon(
                       Icons.delete_forever,
                       size: 26,
+                      color: Colors.purple[800],
                     ),
                   ),
                 ),
@@ -131,7 +139,8 @@ class _SinglePostPageState extends State<SinglePostPage> {
 
           //I'll show a toast with the result
           showToast(
-              result ? "Post successfully saved" : "Error on saving, retry.",context:context);
+              result ? "Post successfully saved" : "Error on saving, retry.",
+              context: context);
         },
         child: const Icon(
           Icons.save,
@@ -155,7 +164,6 @@ class _SinglePostPageState extends State<SinglePostPage> {
                   labelText: 'Title',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(),
                   ),
                 ),
               ),
@@ -172,7 +180,6 @@ class _SinglePostPageState extends State<SinglePostPage> {
                   labelText: 'Link',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(),
                   ),
                 ),
               ),
@@ -190,7 +197,6 @@ class _SinglePostPageState extends State<SinglePostPage> {
                   labelText: 'Share Text',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(),
                   ),
                 ),
               ),
@@ -205,7 +211,6 @@ class _SinglePostPageState extends State<SinglePostPage> {
                   labelText: 'Publish date',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(),
                   ),
                 ),
                 format: DateFormat("yyyy-MM-dd HH:mm"),
@@ -259,9 +264,17 @@ class _SinglePostPageState extends State<SinglePostPage> {
                           'reddit',
                         ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
+                              value: value,
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/logo/$value.png",
+                                    width: 20,
+                                  ),
+                                  SizedBox(width: 14,),
+                                  Text('${value[0].toUpperCase()}${value.substring(1)}'),
+                                ],
+                              ));
                         }).toList(),
                         onChanged: (value) {
                           _chosenValue = value.toString();

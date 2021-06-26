@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'HarperDB Hashnode Hackathon',
+      title: 'Post Scheduler',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.ubuntuTextTheme(
@@ -23,10 +23,17 @@ class MyApp extends StatelessWidget {
             ),
         brightness: Brightness.light,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        primaryColor: Colors.indigo,
-        accentColor: Colors.indigo
+        primarySwatch: Colors.purple,
+        primaryColor: Colors.purple[800], 
+        accentColor: Colors.purple[800], 
+        backgroundColor: Colors.grey[100],
+        scaffoldBackgroundColor: Colors.grey[100],
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey[100],
+          elevation: 0,
+        )
       ),
-      home: MyHomePage(title: 'HarperDB Hashnode Hackathon'),
+      home: MyHomePage(title: 'Post Scheduler'),
     );
   }
 }

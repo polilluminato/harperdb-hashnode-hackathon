@@ -34,7 +34,7 @@ class ScheduleRepository {
         return (jsonDecode(response.body) as List)
             .map((e) => Post.fromJson(e))
             .toList()
-              ..sort((a, b) => a.postDate.compareTo(b.postDate));
+              ..sort((b, a) => a.postDate.compareTo(b.postDate));
       } else {
         throw const Failure(message: 'Something went wrong! - 1');
       }

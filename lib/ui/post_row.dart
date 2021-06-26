@@ -39,12 +39,12 @@ class PostRow extends StatelessWidget {
                   '${DateFormat('MMM').format(post.postDate)}',
                   style: TextStyle(fontSize: 18),
                 ),
-                SizedBox(
-                  height: 24,
-                ),
-                Image.asset(
-                  "assets/logo/${post.platform}.png",
-                  width: 24,
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Image.asset(
+                    "assets/logo/${post.platform}.png",
+                    width: 24,
+                  ),
                 ),
               ],
             ),
@@ -55,7 +55,7 @@ class PostRow extends StatelessWidget {
                 child: Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: Colors.purple[200]!.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -66,15 +66,12 @@ class PostRow extends StatelessWidget {
                     '${post.title}',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Text(
-                    '${post.text}',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(
-                    height: 12,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      '${post.text}',
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
                   Text(
                     '${post.link}',
