@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:harperdb_hashnode_hackathon/models/failure_model.dart';
 import 'package:harperdb_hashnode_hackathon/models/post_model.dart';
 import 'package:harperdb_hashnode_hackathon/pages/single_post_page.dart';
@@ -26,9 +27,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(widget.title),
-      ),
+          title: Text(
+            widget.title,
+            style: GoogleFonts.ubuntu(),
+          ),
+          actions: [
+            InkWell(
+              onTap: () {
+                _refreshPostList();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Icon(
+                  Icons.sync,
+                  size: 26,
+                ),
+              ),
+            ),
+          ]),
       body: RefreshIndicator(
         onRefresh: () async {
           _futurePosts = ScheduleRepository().getPosts();

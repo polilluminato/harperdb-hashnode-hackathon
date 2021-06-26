@@ -1,5 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:harperdb_hashnode_hackathon/models/post_model.dart';
 import 'package:harperdb_hashnode_hackathon/repository/schedule_repository.dart';
 import 'package:intl/intl.dart';
@@ -74,7 +75,10 @@ class _SinglePostPageState extends State<SinglePostPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Single Post Scheduling"),
+        title: Text(
+          "Single Post Scheduling",
+          style: GoogleFonts.ubuntu(),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
