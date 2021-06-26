@@ -1,10 +1,10 @@
 class Post {
-  final int id;
-  final String link;
-  final String platform;
-  final DateTime postDate;
-  final String text;
-  final String title;
+  String id;
+  String link;
+  String platform;
+  DateTime postDate;
+  String text;
+  String title;
 
   Post({
     required this.id,
@@ -17,7 +17,7 @@ class Post {
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return new Post(
-      id: int.parse(json['id']),
+      id: json['id'] as String,
       link: json['link'] as String,
       platform: json['platform'] as String,
       postDate: DateTime.parse(json['post_date']),
