@@ -1,5 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harperdb_hashnode_hackathon/models/post_model.dart';
 import 'package:harperdb_hashnode_hackathon/repository/schedule_repository.dart';
@@ -16,22 +17,21 @@ class SinglePostPage extends StatefulWidget {
 
 class _SinglePostPageState extends State<SinglePostPage> {
   String _chosenValue = "hashnode";
-  List<String> _items = [
-    'hashnode',
-    'twitter',
-    'facebook',
-    'linkedin',
-    'reddit',
-  ];
 
   Widget _deletePopupDialog(BuildContext context) {
     return new AlertDialog(
-      title: Text('Delete Post'),
+      title: Text(
+        'Delete Post',
+        style: TextStyle(color: Colors.black),
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text("Do you really want to delete this post scheduling?"),
+          Text(
+            "Do you really want to delete this post scheduling?",
+            style: TextStyle(color: Colors.black),
+          ),
         ],
       ),
       actions: <Widget>[
@@ -45,9 +45,23 @@ class _SinglePostPageState extends State<SinglePostPage> {
           width: 8,
         ),
         TextButton(
-          onPressed: () {
+          onPressed: () async {
             print("Post to Delete");
+
+            bool result =
+                await ScheduleRepository().removePost(widget.singlePost);
+
+            showToast(result
+                ? "Post successfully deleted"
+                : "Error on delete, retry.",context: context);
+
+            //Remove the dialog
             Navigator.of(context).pop();
+
+            if (result) {
+              //Close the screen
+              Navigator.of(context).pop();
+            }
           },
           child: Text(
             'Yes, delete',
@@ -65,10 +79,8 @@ class _SinglePostPageState extends State<SinglePostPage> {
 
     final _titleController =
         TextEditingController(text: widget.singlePost.title);
-    final _linkController =
-        TextEditingController(text: widget.singlePost.link);
-    final _textController =
-        TextEditingController(text: widget.singlePost.text);
+    final _linkController = TextEditingController(text: widget.singlePost.link);
+    final _textController = TextEditingController(text: widget.singlePost.text);
     final _postDateController = TextEditingController(
         text:
             DateFormat('yyyy-MM-dd HH:mm').format(widget.singlePost.postDate));
@@ -107,17 +119,19 @@ class _SinglePostPageState extends State<SinglePostPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
+        onPressed: () async {
           widget.singlePost.title = _titleController.text;
           widget.singlePost.link = _linkController.text;
           widget.singlePost.text = _textController.text;
-          widget.singlePost.postDate =
-              DateTime.parse(_postDateController.text);
+          widget.singlePost.postDate = DateTime.parse(_postDateController.text);
 
-          _isNewPost
-              ? ScheduleRepository().insertPost(widget.singlePost)
-              : ScheduleRepository().updatePost(widget.singlePost);
+          bool result = _isNewPost
+              ? await ScheduleRepository().insertPost(widget.singlePost)
+              : await ScheduleRepository().updatePost(widget.singlePost);
+
+          //I'll show a toast with the result
+          showToast(
+              result ? "Post successfully saved" : "Error on saving, retry.",context:context);
         },
         child: const Icon(
           Icons.save,
@@ -132,6 +146,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                style: TextStyle(color: Colors.black),
                 controller: _titleController,
                 maxLines: 1,
                 decoration: InputDecoration(
@@ -148,6 +163,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
                 height: 24,
               ),
               TextFormField(
+                style: TextStyle(color: Colors.black),
                 controller: _linkController,
                 maxLines: 1,
                 decoration: InputDecoration(
@@ -164,6 +180,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
                 height: 24,
               ),
               TextFormField(
+                style: TextStyle(color: Colors.black),
                 controller: _textController,
                 minLines: 5,
                 maxLines: 10,
@@ -181,6 +198,7 @@ class _SinglePostPageState extends State<SinglePostPage> {
                 height: 24,
               ),
               DateTimeField(
+                style: TextStyle(color: Colors.black),
                 controller: _postDateController,
                 decoration: InputDecoration(
                   icon: Icon(Icons.calendar_today),
@@ -232,9 +250,14 @@ class _SinglePostPageState extends State<SinglePostPage> {
                         underline: Container(color: Colors.transparent),
                         value: widget.singlePost.platform,
                         isExpanded: true,
-                        style: TextStyle(color: Colors.white),
-                        items: _items
-                            .map<DropdownMenuItem<String>>((String value) {
+                        style: TextStyle(color: Colors.black),
+                        items: [
+                          'hashnode',
+                          'twitter',
+                          'facebook',
+                          'linkedin',
+                          'reddit',
+                        ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),

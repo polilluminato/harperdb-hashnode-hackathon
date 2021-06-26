@@ -27,7 +27,7 @@ class ScheduleRepository {
           HttpHeaders.contentTypeHeader: 'application/json'
         },
         body: json
-            .encode({"operation": "sql", "sql": "SELECT * FROM schedule.post"}),
+            .encode({"operation": "sql", "sql": "SELECT * FROM schedule.post;"}),
       );
 
       if (response.statusCode == 200) {
@@ -57,7 +57,7 @@ class ScheduleRepository {
           "sql": "INSERT INTO schedule.post (link,platform,post_date,text,title) " +
               " VALUE ('${postToInsert.link}','${postToInsert.platform}'" +
               ",'${DateFormat('yyyy-MM-dd HH:mm:ss').format(postToInsert.postDate)}'" +
-              ",'${postToInsert.text}','${postToInsert.title}')"
+              ",'${postToInsert.text}','${postToInsert.title}');"
         }),
       );
 
@@ -86,7 +86,32 @@ class ScheduleRepository {
               " SET link = '${postToUpdate.link}', platform = '${postToUpdate.platform}'" +
               ", post_date = '${DateFormat('yyyy-MM-dd HH:mm:ss').format(postToUpdate.postDate)}'" +
               ", text = '${postToUpdate.text}', title = '${postToUpdate.title}'" +
-              " WHERE id = '${postToUpdate.id}'"
+              " WHERE id = '${postToUpdate.id}';"
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> removePost(Post postToRemove) async {
+    try {
+      final response = await _client.post(
+        Uri.parse(_baseUrl),
+        headers: {
+          HttpHeaders.authorizationHeader:
+              'Basic ${dotenv.env['HARPER_DB_SECRET_KEY']}',
+          HttpHeaders.contentTypeHeader: 'application/json'
+        },
+        body: json.encode({
+          "operation": "sql",
+          "sql": "DELETE FROM schedule.post WHERE id = '${postToRemove.id}';"
         }),
       );
 
