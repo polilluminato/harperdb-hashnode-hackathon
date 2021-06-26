@@ -26,7 +26,7 @@ class PostRow extends StatelessWidget {
         child: ListTile(
           title: Text('${post.title}'),
           subtitle:
-              Text('${DateFormat('dd MMMM y @ HH:mm').format(post.postDate)}'),
+              Text('${DateFormat('dd MMMM y HH:mm').format(post.postDate)}'),
           leading: Image.asset(
             "assets/logo/${post.platform}.png",
             width: 32.0,
