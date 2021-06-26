@@ -24,6 +24,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _refreshPostList() async {
+    _futurePosts = ScheduleRepository().getPosts();
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -47,13 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ]),
       body: RefreshIndicator(
         onRefresh: () async {
-          _futurePosts = ScheduleRepository().getPosts();
-          setState(() {});
+          _refreshPostList();
         },
         child: FutureBuilder<List<Post>>(
           future: _futurePosts,
           builder: (context, snapshot) {
-            print(snapshot);
             if (snapshot.hasData) {
               final items = snapshot.data!;
               return ListView.builder(
