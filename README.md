@@ -1,16 +1,7 @@
-# harperdb_hashnode_hackathon
+# HarperDB Hashnode Hackathon
 
-A new Flutter project.
+This is a Flutter project made for the [Hashnode Hackathon](https://townhall.hashnode.com/announcing-harperdb-hackathon-on-hashnode) in collaboration with [HarperDB](https://harperdb.io/). 
 
-## Getting Started
+The app is a Post Schedule app used to managing the release schedule of your blog post on Hashnode, when post them and when share posts on other platforms like Reddit, Twitter, Facebook, etc. The app is build with Flutter 2.2 and it's ready for Android, iOS and Web, the result look like
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="screens/mockup-phone.png">
